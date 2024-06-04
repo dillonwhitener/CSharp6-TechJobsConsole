@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Net.Http.Headers;
+using System.Reflection.Metadata;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 namespace TechJobsConsoleAutograded6
 {
@@ -64,12 +69,26 @@ namespace TechJobsConsoleAutograded6
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                        List<Dictionary<string, string>> searchResults = JobData.FindByValue(searchTerm);
+                        if (searchResults.Count == 0)
+                        {
+                            Console.WriteLine("No results");
+                        }
+                        else{
+                            PrintJobs(searchResults);
+                        }
+                        
                     }
                     else
                     {
                         List<Dictionary<string, string>> searchResults = JobData.FindByColumnAndValue(columnChoice, searchTerm);
+                        if (searchResults.Count == 0)
+                        {
+                            Console.WriteLine("No results");
+                        }
+                        else{
                         PrintJobs(searchResults);
+                        }
                     }
                 }
 
@@ -132,11 +151,22 @@ namespace TechJobsConsoleAutograded6
             return choiceKeys[choiceIdx];
         }
 
-        // TODO: complete the PrintJobs method.
+      // TODO: complete the PrintJobs method.
         public void PrintJobs(List<Dictionary<string, string>> someJobs)
         {
-            Console.WriteLine("PrintJobs is not implemented yet");
+
+            foreach (Dictionary<string, string> job in someJobs)
+            {
+                Console.WriteLine(Environment.NewLine+"*****");
+
+                foreach((string key, string value) in job)
+                {
+                    Console.WriteLine($"{key}: {value}");
+                }
+
+                Console.WriteLine("*****");
+
+            }
         }
     }
 }
-
